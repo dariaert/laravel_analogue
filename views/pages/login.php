@@ -1,28 +1,49 @@
 <?php
 /**
- * @var \App\Core\View\ViewInterface $view
+ * @var \App\Core\View\View $view
  * @var \App\Core\Session\SessionInterface $session
  */
 ?>
 
-<?php $view->component('start') ?>
+<?php $view->component('start_custom'); ?>
 
+    <main class="main">
+        <div class="container">
+            <div class="form-centre">
+                <div class="login-form">
+                    <h1 class="form_title">Вход</h1>
 
-    <h1>LOGIN PAGE</h1>
+                    <?php if($session->has('error')): ?>
+                        <div class="notice error"><?=$session->getFlash('error')?></div>
+                    <?php endif; ?>
 
-    <form action="/login" method="post">
+                    <form action="/login" method="post" class="register_form">
+                        <input type="email"
+                               id="email"
+                               name="email"
+                               class="custom-input"
+                               placeholder="E-mail"
+                        > <br>
+                        <input type="password"
+                               id="password"
+                               name="password"
+                               class="custom-input"
+                               placeholder="******"
+                        > <br>
+                        <button
+                                type="submit"
+                                class="btn"
+                        >
+                            Войти
+                        </button>
+                    </form>
+                    <div class="register-link">
+                        <a href="/register">Зарегистрироваться</a>
+                    </div>
 
-        <?php if($session->has('error')) { ?>
-            <p style="color: red">
-                <?= $session->getFlash('error') ?>
-            </p>
-        <?php } ?>
+                </div>
+            </div>
+        </div>
+    </main>
 
-        <p>email</p>
-        <input type="text" name="email">
-        <p>password</p>
-        <input type="password" name="password">
-        <button>Login</button>
-    </form>
-
-<?php $view->component('end') ?>
+<?php $view->component('end_custom'); ?>

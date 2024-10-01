@@ -16,6 +16,8 @@ use App\Core\Router\Router;
 use App\Core\Router\RouterInterface;
 use App\Core\Session\Session;
 use App\Core\Session\SessionInterface;
+use App\Core\Storage\Storage;
+use App\Core\Storage\StorageInterface;
 use App\Core\Validator\Validator;
 use App\Core\Validator\ValidatorInterface;
 use App\Core\View\View;
@@ -33,6 +35,7 @@ class Container
     public readonly ConfigInterface $config;
     public readonly DatabaseInterface $database;
     public readonly AuthInterface $auth;
+    public readonly StorageInterface $storage;
 
     public function __construct(){
         $this->registerServices();
@@ -49,7 +52,8 @@ class Container
         $this->database = new Database($this->config);
         $this->auth = new Auth($this->database, $this->session, $this->config);
         $this->view = new View($this->session, $this->auth);
-        $this->router = new Router($this->view, $this->request, $this->redirect, $this->session, $this->database, $this->auth);
+        $this->storage = new Storage($this->config);
+        $this->router = new Router($this->view, $this->request, $this->redirect, $this->session, $this->database, $this->auth, $this->storage);
     }
 
 }

@@ -21,9 +21,13 @@ class HomeController extends Controller
 
     public function store()
     {
+
+
         $file = $this->getRequest()->file('image');
 
-        var_dump($file->move('movies'));
+        $filePath = $file->move('movies');
+
+        var_dump($this->getStorage()->url($filePath));
 
         $validation = $this->getRequest()->validate([
             'name' => ['required', 'min:3', 'max:50'],
