@@ -1,35 +1,64 @@
 <?php
 /**
- * @var \App\Core\View\ViewInterface $view
+ * @var \App\Core\View\View $view
  * @var \App\Core\Session\SessionInterface $session
  */
 ?>
 
-<?php $view->component('start') ?>
+<?php $view->component('start_custom'); ?>
 
+    <main class="main">
+        <div class="container">
+            <div class="form-centre">
+                <div class="register-form">
+                    <h1 class="form_title">Регистрация</h1>
+                    <form action="/register" method="post" class="register_form">
+                        <input
+                                type="text"
+                                id="name"
+                                name="name"
+                                class="custom-input"
+                                <?=$session->has('name') ? 'aria-invalid="true"' : ''?>
+                                placeholder="Имя"
+                        ><br>
+                        <?php if($session->has('name')): ?>
+                            <div class="notice error"><?= $session->getFlash('name')[0] ?></div>
+                        <?php endif; ?>
+                        <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                class="custom-input"
+                                <?=$session->has('email') ? 'aria-invalid="true"' : ''?>
+                                placeholder="E-mail"
+                        ><br>
+                        <?php if($session->has('email')): ?>
+                            <div class="notice error"><?= $session->getFlash('email')[0] ?></div>
+                        <?php endif; ?>
+                        <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                class="custom-input"
+                                <?=$session->has('password') ? 'aria-invalid="true"' : ''?>
+                                placeholder="Пароль"
+                        ><br>
+                        <?php if($session->has('password')): ?>
+                            <div class="notice error"><?= $session->getFlash('password')[0] ?></div>
+                        <?php endif; ?>
+                        <input
+                                type="password"
+                                id="password_confirmation"
+                                name="password_confirmation"
+                                class="custom-input"
+                                placeholder="Подтверждение пароля"
+                        ><br>
+                        <button type="submit" class="btn">Создать аккаунт</button>
+                    </form>
 
-    <h1>REGISTER PAGE</h1>
+                </div>
+            </div>
+        </div>
+    </main>
 
-    <form action="/register" method="post">
-        <p>email</p>
-        <input type="text" name="email">
-        <?php if($session->has('email')) { ?>
-            <ul>
-                <?php foreach ($session->getFlash('email') as $error) { ?>
-                    <li style="color: red"><?=$error?></li>
-                <?php } ?>
-            </ul>
-        <?php } ?>
-        <p>password</p>
-        <input type="password" name="password">
-        <?php if($session->has('password')) { ?>
-            <ul>
-                <?php foreach ($session->getFlash('password') as $error) { ?>
-                    <li style="color: red"><?=$error?></li>
-                <?php } ?>
-            </ul>
-        <?php } ?>
-        <button>Register</button>
-    </form>
-
-<?php $view->component('end') ?>
+<?php $view->component('end_custom'); ?>

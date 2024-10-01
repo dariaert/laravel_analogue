@@ -14,14 +14,15 @@ class RegisterController extends Controller
 
     public function register()
     {
+        var_dump($this->getRequest());
+
         $validation = $this->getRequest()->validate([
-//            'name' => ['required', 'max:255'],
+            'name' => ['required', 'max:255'],
             'email' => ['required', 'email'],
-            'password' => ['required', 'min:8'],
-//            'password' => ['required', 'min:8', 'confirmed'],
-//            'password_confirmation' => ['required', 'min:8'],
+            'password' => ['required', 'min:8', 'confirmed'],
+            'password_confirmation' => ['required', 'min:8'],
         ]);
-//
+
         if (!$validation) {
             foreach ($this->getRequest()->errors() as $field => $errors) {
                 $this->getSession()->set($field, $errors);
@@ -30,13 +31,12 @@ class RegisterController extends Controller
             $this->getRedirect('/register');
         }
 
-        print_r('store user in database');
-
-        $userId = $this->database()->insert('users', [
+        $this->database()->insert('users', [
+            'name' => $this->getRequest()->input('name'),
             'email' => $this->getRequest()->input('email'),
             'password' => password_hash($this->getRequest()->input('password'), PASSWORD_DEFAULT),
         ]);
-        print_r('user created with ID: ' . $userId);
-//        $this->redirect('/');
+
+        $this->getRedirect('/');
     }
 }

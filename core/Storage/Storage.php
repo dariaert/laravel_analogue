@@ -2,6 +2,8 @@
 
 namespace App\Core\Storage;
 
+use App\Core\Config\ConfigInterface;
+
 class Storage implements StorageInterface
 {
 
@@ -12,7 +14,7 @@ class Storage implements StorageInterface
 
     public function url(string $path): string
     {
-        $url = $this->config->get('app.url', 'http://localhost:8000');
+        $url = $this->config->get('app.url', 'http://localhost:8080');
 
         return "$url/storage/$path";
     }

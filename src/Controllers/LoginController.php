@@ -18,19 +18,18 @@ class LoginController extends Controller
 
         $this->getAuth()->attempt($email, $password);
 
-//        if ($this->auth()->attempt($email, $password)) {
-//            $this->getRedirect('/');
-//        }
+        if ($this->getAuth()->attempt($email, $password)) {
+            $this->getRedirect('/');
+        }
 
-//        $this->getSession()->set('error', 'Неверный логин или пароль');
+        $this->getSession()->set('error', 'Неверный логин или пароль');
 
-        $this->getRedirect('/');
+        $this->getRedirect('/login');
     }
 
     public function logout(): void
     {
         $this->getAuth()->logout();
-
         $this->getRedirect('/login');
     }
 }
