@@ -11,19 +11,20 @@ use App\Middleware\GuestMiddleware;
 
 return [
 
+    // GET
     Route::get('/', [HomeController::class, 'index']),
     Route::get('/register', [RegisterController::class, 'index']),
     Route::get('/login', [LoginController::class, 'index']),
     Route::get('/admin/movies/create', [AdminController::class, 'index']),
     Route::get('/admin/genres', [GenreController::class, 'index']),
+    Route::get('/admin/genres/update', [GenreController::class, 'edit']),
 
+    // POST
     Route::post('/register', [RegisterController::class, 'register']),
     Route::post('/login', [LoginController::class, 'login']),
     Route::post('/logout', [LoginController::class, 'logout']),
     Route::post('/admin/genres/create', [GenreController::class, 'store']),
-
-//    Route::get('/admin/add', [HomeController::class, 'add'], [AuthMiddleware::class]),
-//    Route::post('/admin/add', [HomeController::class, 'store']),
-
+    Route::post('/admin/genres/destroy', [GenreController::class, 'destroy']),
+    Route::post('/admin/genres/update', [GenreController::class, 'update']),
 
 ];
